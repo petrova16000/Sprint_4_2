@@ -13,25 +13,32 @@ public class AccountTest {
 
     Account account;
     String name;
+    Boolean expected;
 
-    public AccountTest(String name) {
+    public AccountTest(String name, Boolean expected) {
         this.name = name;
+        this.expected = expected;
     }
 
     @Test
     public void checkNameToEmboss() {
         account = new Account(name);
-        Assert.assertTrue(account.checkNameToEmboss());
+        Assert.assertEquals(expected, account.checkNameToEmboss());
     }
 
     @Parameterized.Parameters
     public static Object[][] getName() {
         return new Object[][]{
-                {"B B"},
-                {"BL R"},
-                {"GREY TREYUIOLKJHYU"},
-                {"GREY TREYUIOLKJHYUW"}
+                {"B B", true},
+                {"BL R", true},
+                {"GREY TREYUIOLKJHYU", true},
+                {"GREY TREYUIOLKJHYUW", true},
+                {"BB", false},
+                {"BBB", false},
+                {" BLR", false},
+                {"GREY UIO LKJHYU", false},
+                {"GREYTREYUIOLKJHYU ", false},
+                {"GREY TREYUIOLKJHYUW1", false}
         };
     }
-
 }
